@@ -6,11 +6,9 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-
     - uses: actions/checkout@v4
 
     - uses: actions/setup-go@v5
@@ -20,6 +18,7 @@ jobs:
     - run: |
         git clone https://github.com/byJoey/ech-wk core
         cd core
+        go mod init
         GOOS=android GOARCH=arm64 go build -o ech-workers
         cd ..
 
