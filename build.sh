@@ -41,7 +41,7 @@ echo "Creating zip file..."
 
 # Move to the root directory and create the zip file there
 cd build/module
-zip -r ../echwk-module.zip *
+zip -r ../echwk-module.zip *  # Ensure the zip file is created at the root
 
 # Check if the zip file is at the root
 cd ../..
