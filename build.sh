@@ -1,21 +1,20 @@
 #!/bin/bash
 set -e
 
-echo "Downloading ECH Workers Android binary from releases..."
+echo "Downloading ECH Workers binary from releases..."
 
 LATEST="v1.4"
-ASSET="com.ech.workers-20251203new-arm64-v8a-release.apk"
+ASSET="ECHWorkers-linux-arm64.tar.gz"
 URL="https://github.com/byJoey/ech-wk/releases/download/${LATEST}/${ASSET}"
 
 # Log the download URL
 echo "Download URL: $URL"
 
 mkdir -p tmp
-wget -q --show-progress -O tmp/eche.apk "$URL" || { echo "Failed to download file."; exit 1; }
+wget -q --show-progress -O tmp/eche.tar.gz "$URL" || { echo "Failed to download file."; exit 1; }
 
 echo "Extracting..."
-# Since it's an APK, we might not need to extract, but let's check for the binary location.
-unzip -o tmp/eche.apk -d tmp
+tar -xzf tmp/eche.tar.gz -C tmp
 
 # Assume extracted has the binary named ech-workers or similar inside
 BINFILE=$(find tmp -type f -name "ech-workers*" | head -n 1)
