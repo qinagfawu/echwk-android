@@ -20,4 +20,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: echwk-module
-        path: echwk-module.zip
+        path: echwk-module.zip  # Ensure this is the correct path
