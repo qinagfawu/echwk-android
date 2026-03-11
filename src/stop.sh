@@ -1,0 +1,1 @@
+pkill ech-workers
