@@ -39,11 +39,11 @@ cp default/config.json build/module/
 # Check if zip file will be created
 echo "Creating zip file..."
 
-# Go to the module directory and create the zip in the root directory
+# Move to the root directory and create the zip file there
 cd build/module
 zip -r ../echwk-module.zip *
 
-# Ensure the zip file exists at the root directory
+# Check if the zip file is at the root
 cd ../..
 if [ ! -f "echwk-module.zip" ]; then
     echo "ERROR: Module zip file not found at the root!"
@@ -55,10 +55,9 @@ ls -lh echwk-module.zip  # Print the details of the zip file to ensure it's crea
 
 echo "Uploading artifact..."
 
-# Now upload the zip file to GitHub Actions (path should be root)
+# Upload the zip file to GitHub Actions (path should be root)
 if [ -f "echwk-module.zip" ]; then
     echo "Uploading artifact..."
-    # Ensure correct file upload path
     upload_path="./echwk-module.zip"
     echo "Uploading $upload_path..."
     curl --upload-file "$upload_path" "https://uploads.github.com/"
