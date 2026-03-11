@@ -36,18 +36,30 @@ chmod 755 build/module/system/bin/ech-workers
 
 cp default/config.json build/module/
 
+echo "Creating zip file..."
+
+# Create the zip file
 cd build/module
 zip -r ../echwk-module.zip *
-cd ../..
 
-# Ensure the file exists before uploading it as artifact
-if [ ! -f "echwk-module.zip" ]; then
+# Ensure the zip file is created
+if [ ! -f "../echwk-module.zip" ]; then
     echo "ERROR: Module zip file not found!"
     exit 1
 fi
 
+# Back to the root folder
+cd ../..
+
 echo "Uploading artifact..."
 # Upload the artifact to GitHub Actions
-curl --upload-file echwk-module.zip "https://uploads.github.com/"
+# Make sure the zip file exists before uploading
+if [ -f "echwk-module.zip" ]; then
+    echo "Uploading artifact..."
+    curl --upload-file echwk-module.zip "https://uploads.github.com/"
+else
+    echo "ERROR: Failed to find module zip file!"
+    exit 1
+fi
 
 echo "Done!"
