@@ -8,7 +8,7 @@ git clone https://github.com/byJoey/ech-wk core
 # Navigate to the core directory
 cd core
 
-# Initialize Go module in the correct directory (specify module path)
+# Initialize Go module with the correct module path
 go mod init github.com/byJoey/ech-wk
 
 # Download dependencies
