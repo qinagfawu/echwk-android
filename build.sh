@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "Downloading ECH Workers binary from releases..."
+echo "Downloading ECH Workers Android binary from releases..."
 
 LATEST="v1.4"
 ASSET="ECHWorkers-linux-arm64.tar.gz"
@@ -39,5 +39,15 @@ cp default/config.json build/module/
 cd build/module
 zip -r ../echwk-module.zip *
 cd ../..
+
+# Ensure the file exists before uploading it as artifact
+if [ ! -f "echwk-module.zip" ]; then
+    echo "ERROR: Module zip file not found!"
+    exit 1
+fi
+
+echo "Uploading artifact..."
+# Upload the artifact to GitHub Actions
+curl --upload-file echwk-module.zip "https://uploads.github.com/"
 
 echo "Done!"
