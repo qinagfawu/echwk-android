@@ -1,48 +1,40 @@
-
 #!/bin/bash
-
 set -e
 
-# Clone ech-wk repository
-git clone https://github.com/byJoey/ech-wk core
+echo "Downloading ECH Workers Android binary from releases..."
 
-# Navigate to the core directory
-cd core
+LATEST="v1.4"
+ASSET="com.ech.workers-20251203new-arm64-v8a-release.zip"
+URL="https://github.com/byJoey/ech-wk/releases/download/${LATEST}/${ASSET}"
 
-# Initialize Go module with a custom module path
-go mod init github.com/byJoey/ech-wk
+mkdir -p tmp
+wget -q -O tmp/eche.tar "$URL"
 
-# Download dependencies
-go mod tidy
+echo "Extracting..."
+unzip -o tmp/eche.tar -d tmp
 
-# Build the Go binary for Android (arm64 architecture)
-GOOS=android GOARCH=arm64 go build -o ech-workers
+# assume extracted has the binary named ech-workers or similar inside
+BINFILE=$(find tmp -type f -name "ech-workers*" | head -n 1)
 
-# Go back to the main project directory
-cd ..
+if [ ! -f "$BINFILE" ]; then
+    echo "ERROR: binary not found in release!"
+    exit 1
+fi
 
-# Create necessary directories for the final build
+echo "Copying..."
 mkdir -p build/module
 cp -r src/* build/module
 cp -r webui build/module
 cp -r api build/module
 
-# Copy the Go binary to the final directory
 mkdir -p build/module/system/bin
-cp core/ech-workers build/module/system/bin/
-
-# Make sure the binary has proper permissions
+cp "$BINFILE" build/module/system/bin/ech-workers
 chmod 755 build/module/system/bin/ech-workers
 
-# Copy the default config file
 cp default/config.json build/module/
 
-# Zip everything into the final module zip
 cd build/module
 zip -r ../echwk-module.zip *
-
-# Clean up the temporary files
 cd ../..
-rm -rf core
 
-echo "Build Complete!"
+echo "Done!"
