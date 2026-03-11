@@ -8,8 +8,11 @@ git clone https://github.com/byJoey/ech-wk core
 # Navigate to the core directory
 cd core
 
-# Initialize Go module in the correct directory
+# Initialize Go module in the correct directory (specify module path)
 go mod init github.com/byJoey/ech-wk
+
+# Download dependencies
+go mod tidy
 
 # Build the Go binary
 GOOS=android GOARCH=arm64 go build -o ech-workers
