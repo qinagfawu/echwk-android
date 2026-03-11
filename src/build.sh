@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 set -e
@@ -11,7 +12,7 @@ cd core
 # Initialize Go module with a custom module path
 go mod init github.com/byJoey/ech-wk
 
-# Download dependencies (to ensure all Go dependencies are available)
+# Download dependencies
 go mod tidy
 
 # Build the Go binary for Android (arm64 architecture)
