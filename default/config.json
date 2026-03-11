@@ -1,0 +1,9 @@
+{
+  "server": "example.workers.dev:443",
+  "local_port": 1080,
+  "ech_doh": "dns.alidns.com/dns-query",
+  "ech_pub_domain": "cloudflare-ech.com",
+  "preferred_ip": "",
+  "token": "",
+  "mode": "global"
+}
