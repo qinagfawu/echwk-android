@@ -8,13 +8,13 @@ git clone https://github.com/byJoey/ech-wk core
 # Navigate to the core directory
 cd core
 
-# Initialize Go module in the correct directory
+# Initialize Go module with a custom module path
 go mod init github.com/byJoey/ech-wk
 
-# Download dependencies
+# Download dependencies (to ensure all Go dependencies are available)
 go mod tidy
 
-# Build the Go binary for Android (arm64)
+# Build the Go binary for Android (arm64 architecture)
 GOOS=android GOARCH=arm64 go build -o ech-workers
 
 # Go back to the main project directory
@@ -30,7 +30,7 @@ cp -r api build/module
 mkdir -p build/module/system/bin
 cp core/ech-workers build/module/system/bin/
 
-# Set permissions for the binary
+# Make sure the binary has proper permissions
 chmod 755 build/module/system/bin/ech-workers
 
 # Copy the default config file
