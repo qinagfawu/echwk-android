@@ -36,31 +36,26 @@ chmod 755 build/module/system/bin/ech-workers
 
 cp default/config.json build/module/
 
-# Check if zip file will be created
-echo "Creating zip file..."
-
-# Move to the root directory and create the zip file there
+# Move to root directory and ensure that the zip file is created there
 cd build/module
-zip -r ../echwk-module.zip *  # Ensure the zip file is created at the root
+zip -r ../echwk-module.zip .  # Ensure the zip file is created at the root
 
-# Check if the zip file is at the root
+# Ensure that the zip file is present in the root
 cd ../..
 if [ ! -f "echwk-module.zip" ]; then
     echo "ERROR: Module zip file not found at the root!"
     exit 1
 fi
 
-echo "Checking file existence..."
-ls -lh echwk-module.zip  # Print the details of the zip file to ensure it's created
+# Check the zip file creation
+ls -lh echwk-module.zip
 
 echo "Uploading artifact..."
 
-# Upload the zip file to GitHub Actions (path should be root)
+# Upload the file to GitHub Actions
 if [ -f "echwk-module.zip" ]; then
-    echo "Uploading artifact..."
-    upload_path="./echwk-module.zip"
-    echo "Uploading $upload_path..."
-    curl --upload-file "$upload_path" "https://uploads.github.com/"
+    echo "Uploading $PWD/echwk-module.zip..."
+    curl --upload-file "$PWD/echwk-module.zip" "https://uploads.github.com/"
 else
     echo "ERROR: Failed to find module zip file!"
     exit 1
